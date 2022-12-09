@@ -18,6 +18,22 @@
   "devDependencies": {
     "sass": "^1.54.9",
     "sass-loader": "^10.3.1",
-    "node-sass": "^7.0.3"
+    "node-sass": "^7.0.3",
+     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/eslint-config-prettier": "6.0.0",
+    "babel-eslint": "^10.0.1",
+    "css-loader": "^5.2.7",
+    "eslint": "6.8.0",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-prettier": "3.4.1",
+    "eslint-plugin-vue": "6.2.2",
+    "lint-staged": "12.2.1",
+     "stylelint": "^14.11.0",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.3.0"
   }
 }

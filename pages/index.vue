@@ -1,5 +1,5 @@
 <template>
-  <Tutorial/>
+ <div class="page">indx page</div>
 </template>
 
 <script>
