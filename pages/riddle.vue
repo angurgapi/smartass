@@ -1,17 +1,20 @@
 <template>
   <div class="page">
     <div class="game">
-      <div class="game__grid">
+      <div :key="restartKey" class="game__grid">
         <Tile
-          v-for="(img, index) in getImagesArray"
+          v-for="(img, index) in shuffledImagesArray"
           :key="index"
           :img="img"
           :revealed="isImageVisible(index)"
           :nailed="nailedImages.includes(index)"
-          @click="revealImage(index)"
+          @click="checkFlip(index)"
         />
       </div>
-      <p class="game__counter">Attempt № {{ attemptNumber }}</p>
+      <div class="game__footer">
+        <p class="game__counter">Attempt № {{ attemptNumber }}</p>
+        <button class="game__button" @click="restartGame">Start again</button>
+      </div>
     </div>
   </div>
 </template>
@@ -45,22 +48,15 @@ export default {
       'Wild_roses'
     ],
     currentAttempt: [],
-    // lastRevealedTile: null,
     nailedImages: [],
-    attemptNumber: 1
+    attemptNumber: 1,
+    shuffledImagesArray: [],
+    restartKey: false
   }),
 
-  computed: {
-    getImagesArray() {
-      return [...this.images, ...this.images].sort(
-        (a, b) => 0.5 - Math.random()
-      )
-    }
-  },
-
   methods: {
-    revealImage(idx) {
-      console.log(this.getImagesArray[idx])
+    checkFlip(idx) {
+      //BEGINNING OF A NEW ATTEMPT
       if (!this.currentAttempt.length) {
         this.currentAttempt.push(idx)
         return
@@ -69,25 +65,69 @@ export default {
           this.currentAttempt.push(idx)
           let firstImg = this.currentAttempt[0],
             secondImg = this.currentAttempt[1]
+          //IF TWO CARDS MATCH
           if (
-            this.getImagesArray[firstImg] === this.getImagesArray[secondImg]
+            this.shuffledImagesArray[firstImg] ==
+            this.shuffledImagesArray[secondImg]
           ) {
             this.nailedImages.push(firstImg, secondImg)
+            localStorage.setItem('nailedPicsArray', this.nailedImages)
+          } else {
+            //IF CARDS DO NOT MATCH, END ATTEMPT
+            setTimeout(() => {
+              this.nextAttempt()
+            }, 5000)
           }
         }
         return
       }
       if (this.currentAttempt.length === 2) {
-        this.currentAttempt = []
-        this.attemptNumber++
+        this.nextAttempt()
         this.currentAttempt.push(idx)
       }
+    },
+    nextAttempt() {
+      this.currentAttempt = []
+      this.attemptNumber++
+      localStorage.setItem('attemptNumber', this.attemptNumber)
     },
     isImageVisible(idx) {
       return (
         this.nailedImages.includes(idx) || this.currentAttempt.includes(idx)
       )
+    },
+    getImagesArray() {
+      if (localStorage.getItem('totalPicsArray')) {
+        this.shuffledImagesArray = localStorage
+          .getItem('totalPicsArray')
+          .split(',')
+      } else {
+        this.shuffledImagesArray = [...this.images, ...this.images].sort(
+          (a, b) => 0.5 - Math.random()
+        )
+        localStorage.setItem('totalPicsArray', this.shuffledImagesArray)
+      }
+    },
+    restartGame() {
+      console.log('user would like to restart')
+      localStorage.removeItem('totalPicsArray')
+      localStorage.removeItem('nailedPicsArray')
+      localStorage.removeItem('attemptNumber')
+      this.restartKey = !this.restartKey
+      this.getImagesArray()
+      this.attemptNumber = 1
     }
+  },
+  mounted() {
+    this.getImagesArray()
+    this.nailedImages =
+      localStorage
+        .getItem('nailedPicsArray')
+        ?.split(',')
+        .map((idx) => {
+          return +idx
+        }) || []
+    this.attemptNumber = localStorage.getItem('attemptNumber') || 1
   }
 }
 </script>
@@ -117,6 +157,18 @@ export default {
   &__counter {
     font-size: 22px;
     font-weight: 600;
+  }
+  &__button {
+    height: 42px;
+    border: none;
+    background-color: rgba(43, 85, 128, 0.7);
+    border-radius: 6px;
+    padding: 0 15px;
+    color: #ffffff;
+    font-size: 20px;
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 }
 </style>
