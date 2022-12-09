@@ -7,7 +7,7 @@
 
 <style lang="scss">
 .navbar {
-  height: 60px;
+  height: 45px;
   padding: 20px;
   &__link {
     font-size: 20px;

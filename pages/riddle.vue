@@ -14,6 +14,7 @@
       <div class="game__footer">
         <p class="game__counter">Attempt № {{ attemptNumber }}</p>
         <button class="game__button" @click="restartGame">Start again</button>
+        <p class="game__counter">Found pairs {{ nailedImages.length / 2 }}</p>
       </div>
     </div>
   </div>
@@ -45,19 +46,25 @@ export default {
       'Starry_night',
       'The_Langlois_bridge_at_Arles',
       'Wheat_Field_with_Cypresses',
-      'Wild_roses'
+      'Wild_roses',
+      'Bedroom'
     ],
     currentAttempt: [],
     nailedImages: [],
     attemptNumber: 1,
     shuffledImagesArray: [],
-    restartKey: false
+    restartKey: false,
+    flipTimeout: null
   }),
 
   methods: {
     checkFlip(idx) {
       //BEGINNING OF A NEW ATTEMPT
+      this.flipTimeout = null
+
       if (!this.currentAttempt.length) {
+        //todo: before timeout click
+        this.nextAttempt()
         this.currentAttempt.push(idx)
         return
       } else if (this.currentAttempt.length === 1) {
@@ -72,18 +79,15 @@ export default {
           ) {
             this.nailedImages.push(firstImg, secondImg)
             localStorage.setItem('nailedPicsArray', this.nailedImages)
+            this.nextAttempt()
           } else {
             //IF CARDS DO NOT MATCH, END ATTEMPT
-            setTimeout(() => {
+            this.flipTimeout = setTimeout(() => {
               this.nextAttempt()
             }, 5000)
           }
         }
         return
-      }
-      if (this.currentAttempt.length === 2) {
-        this.nextAttempt()
-        this.currentAttempt.push(idx)
       }
     },
     nextAttempt() {
@@ -115,6 +119,7 @@ export default {
       localStorage.removeItem('attemptNumber')
       this.restartKey = !this.restartKey
       this.getImagesArray()
+      this.nailedImages = []
       this.attemptNumber = 1
     }
   },
@@ -150,8 +155,14 @@ export default {
     grid-gap: 18px;
     // height: 95vh;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    grid-template-columns: repeat(9, 1fr);
     // grid-template-rows:repeat( auto-fit, minmax(100px, 150px) );
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__counter {

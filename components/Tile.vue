@@ -66,8 +66,8 @@ export default {
     justify-content: center;
     img {
       opacity: 0.6;
-      height: 100px;
-      width: 100px;
+      height: auto;
+      width: 60%;
     }
   }
 }
