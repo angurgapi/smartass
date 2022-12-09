@@ -89,6 +89,7 @@ module.exports = {
 		'no-useless-escape': 0,
 		'no-case-declarations': 0,
 		'no-undef': 0,
-		'comma-dangle': ['error', 'never']
+		'comma-dangle': ['error', 'never'],
+		'vue/multi-word-component-names': 'off',
 	}
 }
