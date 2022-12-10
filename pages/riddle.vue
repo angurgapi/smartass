@@ -83,17 +83,26 @@ export default {
           } else {
             //IF CARDS DO NOT MATCH, END ATTEMPT
             this.flipTimeout = setTimeout(() => {
-              this.nextAttempt()
+              this.hideAttemptCards(this.attemptNumber)
             }, 5000)
           }
         }
         return
+      }
+      if (this.currentAttempt.length === 2) {
+        this.nextAttempt()
+        this.currentAttempt.push(idx)
       }
     },
     nextAttempt() {
       this.currentAttempt = []
       this.attemptNumber++
       localStorage.setItem('attemptNumber', this.attemptNumber)
+    },
+    hideAttemptCards(attemptNum) {
+      if (this.attemptNumber == attemptNum) {
+        this.nextAttempt()
+      }
     },
     isImageVisible(idx) {
       return (

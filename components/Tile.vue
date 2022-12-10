@@ -3,7 +3,7 @@
     <transition name="flip">
       <div :key="revealed" class="tile__inner">
         <template v-if="revealed">
-          <div class="tile__front">
+          <div class="tile__front" :v-tooltip="getTooltipValue">
             <img class="tile__picture" :src="`/art/${img}.webp`" />
           </div>
         </template>
@@ -31,6 +31,11 @@ export default {
     nailed: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    getTooltipValue() {
+      return this.img.split('_').join(' ')
     }
   }
 }
@@ -87,5 +92,27 @@ export default {
 .flip-leave {
   transform: rotateY(180deg);
   opacity: 0;
+}
+//v-tooltip
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+
+  .tooltip-inner {
+    background: black;
+    color: white;
+    border-radius: 16px;
+    padding: 5px 10px 4px;
+  }
+
+  .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+    border-color: black;
+    z-index: 1;
+  }
 }
 </style>
