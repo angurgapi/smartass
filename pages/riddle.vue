@@ -6,15 +6,22 @@
           v-for="(img, index) in shuffledImagesArray"
           :key="index"
           :img="img"
-          :revealed="isImageVisible(index)"
+          :revealed="currentAttemptCards.includes(index)"
           :nailed="nailedImages.includes(index)"
           @click="checkFlip(index)"
         />
       </div>
       <div class="game__footer">
-        <p class="game__counter">Attempt № {{ attemptNumber }}</p>
-        <button class="game__button" @click="restartGame">Start again</button>
-        <p class="game__counter">Found pairs {{ nailedImages.length / 2 }}</p>
+        <div class="game__footer game__footer--left">
+          <p class="game__counter">Attempt № {{ currentAttemptNum }}</p>
+          <span class="game__timer">{{ currentSecond }}s</span>
+          <p class="game__counter">
+            Found pairs: {{ nailedImages.length / 2 }}
+          </p>
+        </div>
+        <div class="game__footer game__footer--right">
+          <button class="game__button" @click="restartGame">Restart</button>
+        </div>
       </div>
     </div>
   </div>
@@ -49,64 +56,94 @@ export default {
       'Wild_roses',
       'Bedroom'
     ],
-    currentAttempt: [],
+    currentAttemptCards: [],
+    currentAttemptNum: 1,
+    currentSecond: 0,
     nailedImages: [],
-    attemptNumber: 1,
     shuffledImagesArray: [],
     restartKey: false,
-    flipTimeout: null
+    flipTimeout: null,
+    timerInterval: null,
+    timerTimeout: null
   }),
+
+  watch: {
+    currentSecond(newVal) {
+      if (newVal === 5) {
+        this.killTimer()
+        this.nextAttempt()
+      }
+    },
+
+    nailedImages(newVal) {
+      if (newVal.length == this.shuffledImagesArray.length) {
+        alert('congrats you won')
+        this.restartGame()
+      }
+    }
+  },
 
   methods: {
     checkFlip(idx) {
       //BEGINNING OF A NEW ATTEMPT
-      this.flipTimeout = null
-
-      if (!this.currentAttempt.length) {
-        //todo: before timeout click
-        this.nextAttempt()
-        this.currentAttempt.push(idx)
+      if (!this.currentAttemptCards.length) {
+        this.currentAttemptCards.push(idx)
         return
-      } else if (this.currentAttempt.length === 1) {
-        if (this.currentAttempt[0] !== idx) {
-          this.currentAttempt.push(idx)
-          let firstImg = this.currentAttempt[0],
-            secondImg = this.currentAttempt[1]
-          //IF TWO CARDS MATCH
-          if (
-            this.shuffledImagesArray[firstImg] ==
-            this.shuffledImagesArray[secondImg]
-          ) {
-            this.nailedImages.push(firstImg, secondImg)
-            localStorage.setItem('nailedPicsArray', this.nailedImages)
-            this.nextAttempt()
-          } else {
-            //IF CARDS DO NOT MATCH, END ATTEMPT
-            this.flipTimeout = setTimeout(() => {
-              this.hideAttemptCards(this.attemptNumber)
-            }, 5000)
-          }
+      }
+      //THIS IS THE 2D CARD OF AN ATTEMPT & it is not a second click on the same card
+      if (
+        this.currentAttemptCards.length === 1 &&
+        this.currentAttemptCards[0] !== idx
+      ) {
+        console.log('user has picked the second card')
+        this.currentAttemptCards.push(idx)
+        let firstImg = this.currentAttemptCards[0],
+          secondImg = this.currentAttemptCards[1]
+        //IF TWO CARDS MATCH
+        if (
+          this.shuffledImagesArray[firstImg] ==
+          this.shuffledImagesArray[secondImg]
+        ) {
+          this.nailedImages.push(firstImg, secondImg)
+          localStorage.setItem('nailedPicsArray', this.nailedImages)
+        } else {
+          console.log('check of both cards resulted in mismatch')
+          //IF CARDS DO NOT MATCH, END ATTEMPT in 5s
+          this.startTimer()
         }
         return
       }
-      if (this.currentAttempt.length === 2) {
+      //NEW ATTEMPT INITIATED BY USER, NOT TIMER, PREV NOT CLEARED YET
+      else if (this.currentAttemptCards.length === 2) {
+        this.killTimer()
         this.nextAttempt()
-        this.currentAttempt.push(idx)
+        this.currentAttemptCards.push(idx)
       }
     },
+
     nextAttempt() {
-      this.currentAttempt = []
-      this.attemptNumber++
+      this.currentAttemptCards = []
+      this.currentAttemptNum++
       localStorage.setItem('attemptNumber', this.attemptNumber)
     },
-    hideAttemptCards(attemptNum) {
-      if (this.attemptNumber == attemptNum) {
-        this.nextAttempt()
-      }
+
+    startTimer() {
+      this.timerInterval = setInterval(() => {
+        if (this.currentSecond < 5) {
+          this.currentSecond++
+        }
+      }, 1000)
     },
+
+    killTimer() {
+      this.currentSecond = 0
+      clearInterval(this.timerInterval)
+    },
+
     isImageVisible(idx) {
       return (
-        this.nailedImages.includes(idx) || this.currentAttempt.includes(idx)
+        this.nailedImages.includes(idx) ||
+        this.currentAttemptCards.includes(idx)
       )
     },
     getImagesArray() {
@@ -122,16 +159,18 @@ export default {
       }
     },
     restartGame() {
-      console.log('user would like to restart')
+      this.killTimer()
       localStorage.removeItem('totalPicsArray')
       localStorage.removeItem('nailedPicsArray')
       localStorage.removeItem('attemptNumber')
       this.restartKey = !this.restartKey
       this.getImagesArray()
       this.nailedImages = []
-      this.attemptNumber = 1
+      this.currentAttemptCards = []
+      this.currentAttemptNum = 1
     }
   },
+
   mounted() {
     this.getImagesArray()
     this.nailedImages =
@@ -141,7 +180,7 @@ export default {
         .map((idx) => {
           return +idx
         }) || []
-    this.attemptNumber = localStorage.getItem('attemptNumber') || 1
+    this.currentAttemptNum = localStorage.getItem('attemptNumber') || 1
   }
 }
 </script>
@@ -162,10 +201,11 @@ export default {
   &__grid {
     display: grid;
     grid-gap: 18px;
-    // height: 95vh;
     justify-content: center;
     grid-template-columns: repeat(9, 1fr);
-    // grid-template-rows:repeat( auto-fit, minmax(100px, 150px) );
+    @media (max-width: 1000px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   &__footer {
@@ -174,20 +214,32 @@ export default {
     align-items: center;
   }
 
-  &__counter {
+  &__counter,
+  &__timer {
     font-size: 22px;
     font-weight: 600;
   }
-  &__button {
-    height: 42px;
-    border: none;
-    background-color: rgba(43, 85, 128, 0.7);
+
+  &__timer {
+    margin: 0 20px;
+    padding: 10px;
     border-radius: 6px;
-    padding: 0 15px;
-    color: #ffffff;
-    font-size: 20px;
+    border: 1px solid #000;
+  }
+  &__button {
+    height: 46px;
+    border: none;
+    background-color: rgba(245, 206, 66, 0.7);
+    border-radius: 6px;
+    padding: 0 18px;
+    color: #43435c;
+    font-weight: 600;
+    font-size: 24px;
+    text-transform: capitalize;
+    box-shadow: 4px 4px 8px -1px rgba(0, 0, 0, 0.2);
     &:hover {
       transform: scale(1.02);
+      box-shadow: 4px 4px 8px 3px rgba(0, 0, 0, 0.2);
     }
   }
 }

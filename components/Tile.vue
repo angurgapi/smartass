@@ -3,7 +3,8 @@
     <transition name="flip">
       <div :key="revealed" class="tile__inner">
         <template v-if="revealed">
-          <div class="tile__front" :v-tooltip="getTooltipValue">
+          <div class="tile__front">
+            <span class="tile__tooltip">{{ getTooltipValue }}</span>
             <img class="tile__picture" :src="`/art/${img}.webp`" />
           </div>
         </template>
@@ -51,11 +52,37 @@ export default {
   transition: all 0.3s ease;
   aspect-ratio: 4/3;
 
+  &:hover {
+    box-shadow: 4px 4px 8px 3px rgba(0, 0, 0, 0.2);
+  }
+
   &__inner,
   &__front,
   &__back {
     width: 100%;
     height: 100%;
+  }
+
+  &__front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      .tile__tooltip {
+        visibility: visible;
+      }
+    }
+  }
+
+  &__tooltip {
+    visibility: hidden;
+    position: absolute;
+    opacity: 0.8;
+    z-index: 100;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px;
   }
 
   &__picture {
@@ -92,27 +119,5 @@ export default {
 .flip-leave {
   transform: rotateY(180deg);
   opacity: 0;
-}
-//v-tooltip
-.tooltip {
-  display: block !important;
-  z-index: 10000;
-
-  .tooltip-inner {
-    background: black;
-    color: white;
-    border-radius: 16px;
-    padding: 5px 10px 4px;
-  }
-
-  .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
-    border-color: black;
-    z-index: 1;
-  }
 }
 </style>
