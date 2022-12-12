@@ -4,6 +4,7 @@
       <div :key="revealed" class="tile__inner">
         <template v-if="revealed">
           <div class="tile__front">
+            <span class="tile__tooltip">{{ getTooltipValue }}</span>
             <img class="tile__picture" :src="`/art/${img}.webp`" />
           </div>
         </template>
@@ -32,6 +33,11 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    getTooltipValue() {
+      return this.img.split('_').join(' ')
+    }
   }
 }
 </script>
@@ -46,11 +52,37 @@ export default {
   transition: all 0.3s ease;
   aspect-ratio: 4/3;
 
+  &:hover {
+    box-shadow: 4px 4px 8px 3px rgba(0, 0, 0, 0.2);
+  }
+
   &__inner,
   &__front,
   &__back {
     width: 100%;
     height: 100%;
+  }
+
+  &__front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      .tile__tooltip {
+        visibility: visible;
+      }
+    }
+  }
+
+  &__tooltip {
+    visibility: hidden;
+    position: absolute;
+    opacity: 0.8;
+    z-index: 100;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px;
   }
 
   &__picture {
@@ -66,8 +98,8 @@ export default {
     justify-content: center;
     img {
       opacity: 0.6;
-      height: 100px;
-      width: 100px;
+      height: auto;
+      width: 60%;
     }
   }
 }
