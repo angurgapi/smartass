@@ -1,6 +1,10 @@
 <template>
   <div class="page">
-    <div class="game">
+    <h1 class="page__title">Pairs</h1>
+    <span class="page__description"
+      >Find a match for every Van Gogh's painting</span
+    >
+    <div class="game card">
       <div :key="restartKey" class="game__grid">
         <Tile
           v-for="(img, index) in shuffledImagesArray"
@@ -14,7 +18,11 @@
       <div class="game__footer">
         <div class="game__footer game__footer--left">
           <p class="game__counter">Attempt № {{ currentAttemptNum }}</p>
-          <span class="game__timer">{{ currentSecond }}s</span>
+
+          <div class="game__timer f-row">
+            <svg-icon name="clock" />
+            <span>{{ currentSecond }}s</span>
+          </div>
           <p class="game__counter">
             Found pairs: {{ nailedImages.length / 2 }}
           </p>
@@ -28,10 +36,10 @@
 </template>
 
 <script>
-import Tile from '@/components/Tile'
+import Tile from '@/components/pairs/Tile'
 
 export default {
-  name: 'RiddlePage',
+  name: 'PairsPage',
   components: { Tile },
   layout: 'default',
 
@@ -180,27 +188,22 @@ export default {
         .map((idx) => {
           return +idx
         }) || []
-    this.currentAttemptNum = localStorage.getItem('attemptNumber') || 1
+    console.log(localStorage.getItem('attemptNumber'))
+    this.currentAttemptNum = +localStorage.getItem('attemptNumber') || 1
+  },
+  beforeDestroy() {
+    this.restartGame()
   }
 }
 </script>
 
-<style lang="scss">
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<style scoped lang="scss">
 .game {
   height: 100%;
-  width: 95vw;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  padding: 10px;
+
   &__grid {
     display: grid;
-    grid-gap: 18px;
+    grid-gap: 14px;
     justify-content: center;
     grid-template-columns: repeat(9, 1fr);
     @media (max-width: 1000px) {
@@ -211,7 +214,15 @@ export default {
   &__footer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     align-items: center;
+    &--left,
+    &--right {
+      width: fit-content;
+    }
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
   }
 
   &__counter,
@@ -222,9 +233,21 @@ export default {
 
   &__timer {
     margin: 0 20px;
+    width: 80px;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #000;
+    line-height: 22px;
+    svg {
+      height: 22px;
+      width: 22px;
+      fill: red;
+    }
+
+    span {
+      margin-left: 10px;
+      padding-top: 5px;
+    }
   }
   &__button {
     height: 46px;

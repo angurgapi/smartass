@@ -1,0 +1,30 @@
+.page {
+    // font-family: 'Josefin';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &__title {
+        margin: 0 auto 10px auto;
+    }
+    &__title, &__description {
+        color: #FFFADE;
+    }
+
+    &__description {
+        text-align: center;
+        font-size: 24px;
+    }
+}
+
+.game {
+    margin-top: 20px;
+    padding: 10px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

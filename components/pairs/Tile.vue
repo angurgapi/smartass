@@ -83,6 +83,7 @@ export default {
     background: #fff;
     border-radius: 6px;
     padding: 6px;
+    font-size: 20px;
   }
 
   &__picture {
