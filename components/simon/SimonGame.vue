@@ -160,6 +160,7 @@ export default {
 .field {
   &__game {
     position: relative;
+    margin-bottom: 30px;
   }
   &__grid {
     width: fit-content;

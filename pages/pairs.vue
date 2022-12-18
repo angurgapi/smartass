@@ -200,6 +200,7 @@ export default {
 <style scoped lang="scss">
 .game {
   height: 100%;
+  width: 100%;
 
   &__grid {
     display: grid;

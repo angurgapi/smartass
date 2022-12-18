@@ -1,5 +1,5 @@
 <template>
-  <div class="reason-card card">
+  <div class="reason-card card" :class="{ invisible: isInvisible }">
     <div class="reason-card__icon">
       <img :src="`/landing/${card.icon}.png`" />
     </div>
@@ -15,6 +15,33 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data: () => ({
+    isInvisible: true,
+    observer: null
+  }),
+  methods: {
+    observeScroll() {
+      const target = this.$el
+      const options = {
+        threshold: 0.3
+      }
+
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.isInvisible = false
+          }
+          //   else {
+          //     this.isInvisible = true
+          //   }
+        })
+      }, options)
+      this.observer.observe(this.$el)
+    }
+  },
+  mounted() {
+    this.observeScroll()
   }
 }
 </script>
@@ -23,6 +50,7 @@ export default {
 .reason-card {
   display: flex;
   padding: 20px;
+  user-select: none;
   align-items: center;
   transition: 0.3s all ease-in-out;
   &:hover {
@@ -57,5 +85,10 @@ export default {
   margin-top: 10px;
   opacity: 0.8;
   text-align: justify;
+  transform: translateY(0);
+}
+.invisible {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>

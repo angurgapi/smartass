@@ -7,23 +7,25 @@
     <div class="wrapper__content">
       <Nuxt />
     </div>
+    <FooterBlock landing />
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
 import Banner from '@/components/elements/Banner'
+import FooterBlock from '@/components/elements/FooterBlock'
 
 export default {
-  components: { NavBar, Banner }
+  components: { NavBar, Banner, FooterBlock }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wrapper {
   height: 100%;
   min-height: 100vh;
-  background: #fffade;
+  background: #fffade !important;
   &__banner {
     background-image: linear-gradient(
       to right,

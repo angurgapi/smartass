@@ -4,14 +4,16 @@
     <div class="wrapper__content">
       <Nuxt />
     </div>
+    <FooterBlock />
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import FooterBlock from '@/components/elements/FooterBlock'
 
 export default {
-  components: { NavBar }
+  components: { NavBar, FooterBlock }
 }
 </script>
 
