@@ -1,8 +1,8 @@
 <template>
   <div class="navbar">
     <nuxt-link class="navbar__link" to="/">home</nuxt-link>
-    <nuxt-link class="navbar__link" to="/pairs">pairs</nuxt-link>
-    <nuxt-link class="navbar__link" to="/simon">simon</nuxt-link>
+    <nuxt-link class="navbar__link" to="/games">brain games</nuxt-link>
+    <!-- <nuxt-link class="navbar__link" to="/simon">simon</nuxt-link> -->
   </div>
 </template>
 

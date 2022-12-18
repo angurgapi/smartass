@@ -42,7 +42,7 @@
 
 <script>
 import Tile from '@/components/pairs/Tile'
-import OverlayModal from '../components/elements/OverlayModal.vue'
+import OverlayModal from '@/components/elements/OverlayModal.vue'
 
 export default {
   name: 'PairsPage',

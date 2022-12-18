@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    min-height: calc(100vh - 415px);
    
 
     &__title {
@@ -16,7 +17,9 @@
 
     &__description {
         text-align: center;
-        font-size: 24px;
+        font-size: 22px;
+        font-family: 'Rubik';
+        margin-bottom: 0;
     }
 }
 

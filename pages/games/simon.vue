@@ -1,10 +1,10 @@
 <template>
   <div class="page">
     <h1 class="page__title">Simon</h1>
-    <span class="page__description"
-      >Repeat the sequence of buttons <br />
-      played by the computer</span
-    >
+    <p class="page__description">
+      Repeat the sequence of buttons <br />
+      played by the computer
+    </p>
     <div class="game card">
       <SimonGame />
     </div>
