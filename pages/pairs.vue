@@ -32,18 +32,25 @@
         </div>
       </div>
     </div>
+    <OverlayModal v-if="isModalVisible" @close="isModalVisible = false">
+      <template #content>
+        <div class="modal-content">Congratulations! You nailed it!</div>
+      </template>
+    </OverlayModal>
   </div>
 </template>
 
 <script>
 import Tile from '@/components/pairs/Tile'
+import OverlayModal from '../components/elements/OverlayModal.vue'
 
 export default {
   name: 'PairsPage',
-  components: { Tile },
+  components: { Tile, OverlayModal },
   layout: 'default',
 
   data: () => ({
+    isModalVisible: false,
     images: [
       'Almond_blossoms',
       'Bowl_with_Daisies',
@@ -85,7 +92,7 @@ export default {
 
     nailedImages(newVal) {
       if (newVal.length == this.shuffledImagesArray.length) {
-        alert('congrats you won')
+        this.isModalVisible = true
         this.restartGame()
       }
     }
