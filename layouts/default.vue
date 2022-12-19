@@ -17,14 +17,28 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wrapper {
   height: 100%;
   min-height: 100vh;
+  // background: linear-gradient(
+  //   112.1deg,
+  //   rgb(32, 38, 57) 11.4%,
+  //   rgb(63, 76, 119) 70.2%
+  // );
+  background: #fffade;
   background: linear-gradient(
-    112.1deg,
-    rgb(32, 38, 57) 11.4%,
-    rgb(63, 76, 119) 70.2%
+    153deg,
+    rgba(255, 250, 222, 0.969625350140056) 0%,
+    rgba(255, 250, 222, 0.6951155462184874) 43%,
+    rgba(64, 6, 105, 0.6110819327731092) 100%
   );
+  .navbar {
+    background: linear-gradient(
+      112.1deg,
+      rgb(32, 38, 57) 11.4%,
+      rgb(63, 76, 119) 70.2%
+    );
+  }
 }
 </style>

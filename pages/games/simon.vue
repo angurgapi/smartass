@@ -26,9 +26,5 @@ export default {
   padding: 24px;
   max-width: 600px;
   width: 90%;
-  &__value,
-  &__speed {
-    margin-top: 18px;
-  }
 }
 </style>

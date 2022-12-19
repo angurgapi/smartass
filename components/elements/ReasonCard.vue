@@ -48,6 +48,7 @@ export default {
 
 <style lang="scss">
 .reason-card {
+  width: 100%;
   display: flex;
   padding: 20px;
   user-select: none;

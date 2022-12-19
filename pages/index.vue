@@ -2,7 +2,7 @@
   <div class="landing page">
     <div class="landing__content f-col">
       <section class="landing__reasons">
-        <div class="landing__inner">
+        <div class="landing__inner f-col">
           <h2>Why even bother?</h2>
           <ReasonCard
             v-for="(reason, index) in reasons"
@@ -13,7 +13,7 @@
         </div>
       </section>
       <section class="landing__offer">
-        <div class="landing__inner">
+        <div class="landing__inner f-col">
           <h2>What's on the table</h2>
           <lottie-player
             src="/lottie/brain-bulb-with-gears.json"
@@ -31,6 +31,8 @@
             system developed by Ryuta Kawashima, a japanese
             <span class="highlighted">neuroscientist</span>.
           </p>
+
+          <nuxt-link class="btn btn--primary" to="/games">Work out</nuxt-link>
         </div>
       </section>
     </div>

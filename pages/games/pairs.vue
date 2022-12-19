@@ -28,7 +28,7 @@
           </p>
         </div>
         <div class="game__footer game__footer--right">
-          <button class="game__button" @click="restartGame">Restart</button>
+          <button class="btn game__button" @click="restartGame">Restart</button>
         </div>
       </div>
     </div>

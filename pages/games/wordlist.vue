@@ -5,7 +5,7 @@
     <template v-if="isListVisible">
       <p class="page__description">
         Memorise as many words as possible <br />
-        and right them down after 2 minutes pass
+        and write them down after 2 minutes pass
       </p>
     </template>
     <template v-else>
@@ -17,27 +17,36 @@
       >
     </template>
     <div class="word-list">
-      <div
+      <WordItem
         v-for="(word, index) in wordList"
         :key="index"
-        class="word-list__card card"
-      >
-        <template v-if="isListVisible"> {{ word }}</template>
-        <template v-else>
-          <input type="text" class="word-list__input" @blur="checkWord" />
-        </template>
-      </div>
+        :ref="`word-${index}`"
+        :wordValue="word"
+        :visible="isListVisible"
+        @word="checkWord"
+      />
     </div>
-    <Timer stopAt="20" :on="isTimerOn" @timeout="isListVisible = false" />
+    <div class="word-list__controls f-row">
+      <Timer
+        ref="timer"
+        stopAt="120"
+        :on="isTimerOn"
+        @timeout="isListVisible = false"
+      />
+      <button class="btn btn--primary" @click="changeStage">
+        {{ getBtnText }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import Timer from '@/components/elements/Timer'
+import WordItem from '@/components/memo/WordItem'
 
 export default {
   name: 'WordList',
-  components: { Timer },
+  components: { Timer, WordItem },
   data: () => ({
     isListVisible: true,
     isTimerOn: false,
@@ -72,14 +81,27 @@ export default {
       'example',
       'ring',
       'boot'
-    ]
+    ],
+    userWords: []
   }),
+  computed: {
+    getBtnText() {
+      return this.isListVisible ? "I'm ready" : 'Restart'
+    }
+  },
   methods: {
-    checkWord(e) {
-      console.log(e.target.value)
-      if (this.wordList.includes(e.target.value)) {
-        e.target.classList.add('correct')
+    checkWord(word, key) {
+      if (
+        this.wordList.includes(word.toLowerCase()) &&
+        !this.userWords.includes(word.toLowerCase())
+      ) {
+        this.userWords.push(word.toLowerCase())
+        this.$refs[`word-${key}`][0].isCorrect = true
       }
+    },
+    changeStage() {
+      this.isListVisible = !this.isListVisible
+      this.isTimerOn = !this.isTimerOn
     }
   },
   mounted() {
@@ -97,9 +119,7 @@ export default {
   grid-template-columns: repeat(auto-fill, 150px);
   grid-gap: 16px;
   justify-content: center;
-  &__card {
-    padding: 16px;
-  }
+
   &__hint {
     font-size: 18px;
     margin-top: 6px;
@@ -107,22 +127,12 @@ export default {
     color: #fff;
     text-align: center;
   }
-
-  &__input {
-    height: 100%;
+  &__controls {
     width: 100%;
-    border: none;
-    outline: none;
-    font-size: 18px;
-    font-family: 'Josefin';
-    &:focus {
-      border: none;
-      outline: none;
+    justify-content: center;
+    .btn--primary {
+      margin-left: 20px;
     }
   }
-}
-
-.correct {
-  color: #07782f;
 }
 </style>

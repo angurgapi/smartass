@@ -1,7 +1,7 @@
 <template>
   <div class="field f-col">
     <div class="field__game">
-      <button class="start-btn" @click="startGame">{{ getBtnText }}</button>
+      <button class="btn start-btn" @click="startGame">{{ getBtnText }}</button>
 
       <div class="field__grid">
         <SoundBtn
@@ -20,7 +20,7 @@
       <button
         v-for="(mode, index) in speedOptions"
         :key="index"
-        class="speed-btn"
+        class="btn speed-btn"
         :class="{ 'speed-btn--active': gameSpeed === mode.value }"
         @click="setSpeed(mode.value)"
       >

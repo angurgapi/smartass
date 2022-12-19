@@ -11,7 +11,7 @@
     </svg>
     <div class="footer__content f-row">
       <p class="footer__disclaimer">© smartass - Boost your brain power</p>
-      <button class="footer__up f-col" @click="scrollTop">
+      <button class="btn footer__up f-col" @click="scrollTop">
         <svg-icon name="up" />
       </button>
     </div>
@@ -58,7 +58,6 @@ export default {
     border-radius: 50%;
     flex-shrink: 0;
     box-shadow: 1px 8px 19px 1px rgba(96, 100, 103, 0.2);
-    transition: 0.3s all ease-in-out;
     &:hover {
       box-shadow: 1px 8px 19px 0px rgba(96, 100, 103, 0.39);
     }

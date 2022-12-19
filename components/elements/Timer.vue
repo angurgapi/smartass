@@ -20,14 +20,15 @@ export default {
   },
   data: () => ({
     currentSecond: 0,
-    timerInterval: null,
-    timerTimeout: null
+    timerInterval: null
   }),
   watch: {
     on: {
       handler: function (newVal) {
         if (newVal) {
           this.startTimer()
+        } else {
+          this.stopTimer()
         }
       }
     },
@@ -41,38 +42,18 @@ export default {
   },
   methods: {
     startTimer() {
+      this.currentSecond = 0
       this.timerInterval = setInterval(() => {
-        if (this.currentSecond < +this.stopAt) {
+        if (this.currentSecond < +this.stopAt && this.on) {
           this.currentSecond++
         }
       }, 1000)
     },
 
     stopTimer() {
-      this.timerInterval = null
+      clearInterval(this.timerInterval)
       this.$emit('timeout')
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.timer {
-  width: 150px;
-  border-radius: 5px;
-  border: 2px solid #fff;
-  padding: 5px;
-  line-height: 20px;
-  font-size: 20px;
-  color: #fff;
-  svg {
-    height: 20px;
-    width: 20px;
-    fill: #fff;
-    margin-right: 10px;
-  }
-  span {
-    margin-top: 2px;
-  }
-}
-</style>

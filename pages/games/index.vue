@@ -43,11 +43,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
-  background: #fffade;
-}
 .games-grid {
+  margin: 40px auto 40px;
   display: grid;
+  justify-content: center;
   width: 100%;
   grid-template-columns: repeat(auto-fit, 250px);
   grid-gap: 18px;
