@@ -22,7 +22,7 @@
             autoPlay
           />
 
-          <p>
+          <p class="landing__info">
             Brain fitness is just like pilates or morning jogging: you succeed
             after <span class="highlighted">continious practice</span>.<br />
             If you're ready to try, we offer several kinds of exercises.<br />
@@ -124,8 +124,11 @@ export default {
       rgba(106, 152, 153, 1) 0%,
       rgba(255, 250, 222, 1) 100%
     );
-    p {
-      font-size: 1.6rem;
+  }
+  &__info {
+    font-size: 1.6rem;
+    @media (max-width: 1000px) {
+      font-size: 1.2rem;
     }
   }
 }
