@@ -4,7 +4,7 @@
 
     <template v-if="isListVisible">
       <p class="page__description">
-        Memorise as many words as possible <br />
+        Memorize as many words as possible <br />
         and write them down after 2 minutes pass
       </p>
     </template>
@@ -26,7 +26,7 @@
         @word="checkWord"
       />
     </div>
-    <div class="word-list__controls f-row">
+    <div class="game__controls">
       <Timer
         ref="timer"
         stopAt="120"
@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import Timer from '@/components/elements/Timer'
 import WordItem from '@/components/memo/WordItem'
 
 export default {
   name: 'WordList',
-  components: { Timer, WordItem },
+  components: { WordItem },
+  layout: 'game',
   data: () => ({
     isListVisible: true,
     isTimerOn: false,
@@ -86,7 +86,7 @@ export default {
   }),
   computed: {
     getBtnText() {
-      return this.isListVisible ? "I'm ready" : 'Restart'
+      return this.isListVisible ? 'I memorized' : 'Restart'
     }
   },
   methods: {
@@ -119,6 +119,17 @@ export default {
   grid-template-columns: repeat(auto-fill, 150px);
   grid-gap: 16px;
   justify-content: center;
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, 110px);
+  }
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(auto-fill, 90px);
+    grid-gap: 6px;
+    font-size: 18px;
+    .word-item {
+      padding: 6px;
+    }
+  }
 
   &__hint {
     font-size: 18px;
@@ -126,13 +137,6 @@ export default {
     opacity: 0.8;
     color: #fff;
     text-align: center;
-  }
-  &__controls {
-    width: 100%;
-    justify-content: center;
-    .btn--primary {
-      margin-left: 20px;
-    }
   }
 }
 </style>

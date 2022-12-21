@@ -19,23 +19,30 @@ export default {
         id: 1,
         title: 'Pairs',
         description:
-          "Memorise the cards' positions and find a match for each card",
+          "Memorize the cards' positions and find a match for each card",
         image: 'pairs',
         url: 'pairs'
       },
       {
         id: 2,
         title: 'Simon',
-        description: 'Reproduce the random sequence of light & sound signals',
+        description: 'Repeat the random sequence of light & sound signals',
         image: 'simon',
         url: 'simon'
       },
       {
         id: 3,
         title: 'Word list',
-        description: 'Reproduced as many words from the list as you remember',
+        description: 'Reproduce as many words from the list as you remember',
         url: 'wordlist',
         image: 'wordlist'
+      },
+      {
+        id: 4,
+        title: 'Simple math',
+        description: 'Calculate the results of elementary math expressions',
+        url: 'math',
+        image: 'math'
       }
     ]
   })

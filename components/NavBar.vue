@@ -1,10 +1,22 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" :class="{ 'navbar--transparent': transparent }">
     <nuxt-link class="navbar__link" to="/">home</nuxt-link>
     <nuxt-link class="navbar__link" to="/games">brain games</nuxt-link>
     <!-- <nuxt-link class="navbar__link" to="/simon">simon</nuxt-link> -->
   </div>
 </template>
+
+<script>
+export default {
+  name: 'NavBar',
+  props: {
+    transparent: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 .navbar {
@@ -36,6 +48,15 @@
     &:focus::after {
       opacity: 1;
       transform: translate3d(0, 0.2em, 0);
+    }
+  }
+
+  &--transparent {
+    .navbar__link {
+      color: #202639;
+      &::after {
+        background-color: #202639;
+      }
     }
   }
 }

@@ -1,6 +1,10 @@
 <template>
-  <div class="footer" :class="{ 'footer--landing': landing }">
+  <div
+    class="footer"
+    :class="{ 'footer--landing': landing, 'footer--straight': straight }"
+  >
     <svg
+      v-if="!straight"
       class="footer__svg"
       width="100%"
       height="100"
@@ -23,6 +27,10 @@ export default {
   name: 'FooterBlock',
   props: {
     landing: {
+      type: Boolean,
+      default: false
+    },
+    straight: {
       type: Boolean,
       default: false
     }

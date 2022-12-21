@@ -17,7 +17,8 @@ export default {
   name: 'Game',
   components: {
     SimonGame
-  }
+  },
+  layout: 'game'
 }
 </script>
 

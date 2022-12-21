@@ -47,7 +47,7 @@ import OverlayModal from '@/components/elements/OverlayModal.vue'
 export default {
   name: 'PairsPage',
   components: { Tile, OverlayModal },
-  layout: 'default',
+  layout: 'game',
 
   data: () => ({
     isModalVisible: false,
@@ -122,7 +122,6 @@ export default {
           this.nailedImages.push(firstImg, secondImg)
           localStorage.setItem('nailedPicsArray', this.nailedImages)
         } else {
-          console.log('check of both cards resulted in mismatch')
           //IF CARDS DO NOT MATCH, END ATTEMPT in 5s
           this.startTimer()
         }

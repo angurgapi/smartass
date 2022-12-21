@@ -21,6 +21,9 @@
         font-family: 'Rubik';
         margin-bottom: 0;
     }
+    @media(max-width: 330px) {
+        padding: 20px 10px 20px 10px;
+    }
 }
 
 .game {
@@ -35,5 +38,33 @@
     &__speed {
       margin-top: 18px;
       display: flex;
+    }
+    &__controls {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        .btn--primary {
+          margin-left: 20px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
+        }
+    }
+    &__input {
+        height: 50px;
+        font-size: 30px;
+        border-radius: 8px;
+        padding: 8px;
+        outline: none;
+        border: 2px solid rgba(0, 0, 0, 0.8);
+        width: 100px;
+        text-align: center;      
+      }
+    &__modal {
+        max-width: 300px;
+        padding: 20px;
     }
 }

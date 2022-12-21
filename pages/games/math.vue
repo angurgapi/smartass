@@ -12,6 +12,7 @@
 import MathGame from '@/components/math/MathGame'
 export default {
   name: 'SpeedMath',
-  components: { MathGame }
+  components: { MathGame },
+  layout: 'game'
 }
 </script>

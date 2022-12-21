@@ -11,7 +11,7 @@ export default {
   props: {
     stopAt: {
       type: [String, Number],
-      required: true
+      default: null
     },
     on: {
       type: Boolean,
@@ -34,7 +34,7 @@ export default {
     },
     currentSecond: {
       handler: function (newVal) {
-        if (newVal == +this.stopAt) {
+        if (this.stopAt && newVal == +this.stopAt) {
           this.stopTimer()
         }
       }
@@ -44,15 +44,17 @@ export default {
     startTimer() {
       this.currentSecond = 0
       this.timerInterval = setInterval(() => {
-        if (this.currentSecond < +this.stopAt && this.on) {
-          this.currentSecond++
-        }
+        // if (this.currentSecond < +this.stopAt && this.on) {
+        //   this.currentSecond++
+        // }
+        this.currentSecond++
       }, 1000)
     },
 
     stopTimer() {
       clearInterval(this.timerInterval)
       this.$emit('timeout')
+      this.$emit('report', this.currentSecond)
     }
   }
 }
