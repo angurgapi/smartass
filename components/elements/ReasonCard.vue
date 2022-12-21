@@ -87,6 +87,10 @@ export default {
   opacity: 0.8;
   text-align: justify;
   transform: translateY(0);
+  @media (max-width: 500px) {
+    font-size: 14px;
+    line-height: 15px;
+  }
 }
 .invisible {
   opacity: 0;
