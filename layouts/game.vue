@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <NavBar />
+    <NavBar transparent />
     <div class="wrapper__content">
       <Nuxt />
     </div>
-    <FooterBlock />
+    <FooterBlock straight />
   </div>
 </template>
 
@@ -21,11 +21,6 @@ export default {
 .wrapper {
   height: 100%;
   min-height: 100vh;
-  // background: linear-gradient(
-  //   112.1deg,
-  //   rgb(32, 38, 57) 11.4%,
-  //   rgb(63, 76, 119) 70.2%
-  // );
   background: #fffade;
   background: linear-gradient(
     153deg,
@@ -34,11 +29,10 @@ export default {
     rgba(64, 6, 105, 0.6110819327731092) 100%
   );
   .navbar {
-    background: linear-gradient(
-      112.1deg,
-      rgb(32, 38, 57) 11.4%,
-      rgb(63, 76, 119) 70.2%
-    );
+    background: none;
+  }
+  .page {
+    min-height: calc(100vh - 200px);
   }
 }
 </style>

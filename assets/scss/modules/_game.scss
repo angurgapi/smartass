@@ -1,0 +1,70 @@
+.page {
+    // font-family: 'Josefin';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 20px 20px;
+    min-height: calc(100vh - 415px);
+   
+
+    &__title {
+        margin: 0 auto 10px auto;
+    }
+    &__title, &__description {
+        color: $primary-dark;
+    }
+
+    &__description {
+        text-align: center;
+        font-size: 22px;
+        font-family: 'Rubik';
+        margin-bottom: 0;
+    }
+    @media(max-width: 330px) {
+        padding: 20px 10px 20px 10px;
+    }
+}
+
+.game {
+    margin-top: 20px;
+    padding: 10px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &__value,
+    &__speed {
+      margin-top: 18px;
+      display: flex;
+    }
+    &__controls {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        .btn--primary {
+          margin-left: 20px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
+        }
+    }
+    &__input {
+        height: 50px;
+        font-size: 30px;
+        border-radius: 8px;
+        padding: 8px;
+        outline: none;
+        border: 2px solid rgba(0, 0, 0, 0.8);
+        width: 100px;
+        text-align: center;      
+      }
+    &__modal {
+        max-width: 300px;
+        padding: 20px;
+    }
+}

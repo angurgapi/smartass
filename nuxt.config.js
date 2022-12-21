@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'riddles',
+    title: 'smartass',
     htmlAttrs: {
       lang: 'en'
     },
@@ -12,17 +12,18 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icon.png' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/scss/main.scss'
+    '@/assets/scss/main.scss', '@/assets/scss/modules/app.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/global-components',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -37,7 +38,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/svg-sprite',
   ],
+  svgSprite: {
+    input: '~/assets/icons/'
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

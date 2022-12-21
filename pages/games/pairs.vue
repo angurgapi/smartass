@@ -1,6 +1,10 @@
 <template>
   <div class="page">
-    <div class="game">
+    <h1 class="page__title">Pairs</h1>
+    <span class="page__description"
+      >Find a match for every Van Gogh's painting</span
+    >
+    <div class="game card">
       <div :key="restartKey" class="game__grid">
         <Tile
           v-for="(img, index) in shuffledImagesArray"
@@ -14,28 +18,39 @@
       <div class="game__footer">
         <div class="game__footer game__footer--left">
           <p class="game__counter">Attempt № {{ currentAttemptNum }}</p>
-          <span class="game__timer">{{ currentSecond }}s</span>
+
+          <div class="game__timer f-row">
+            <svg-icon name="clock" />
+            <span>{{ currentSecond }}s</span>
+          </div>
           <p class="game__counter">
             Found pairs: {{ nailedImages.length / 2 }}
           </p>
         </div>
         <div class="game__footer game__footer--right">
-          <button class="game__button" @click="restartGame">Restart</button>
+          <button class="btn game__button" @click="restartGame">Restart</button>
         </div>
       </div>
     </div>
+    <OverlayModal v-if="isModalVisible" @close="isModalVisible = false">
+      <template #content>
+        <div class="modal-content">Congratulations! You nailed it!</div>
+      </template>
+    </OverlayModal>
   </div>
 </template>
 
 <script>
-import Tile from '@/components/Tile'
+import Tile from '@/components/pairs/Tile'
+import OverlayModal from '@/components/elements/OverlayModal.vue'
 
 export default {
-  name: 'RiddlePage',
-  components: { Tile },
-  layout: 'default',
+  name: 'PairsPage',
+  components: { Tile, OverlayModal },
+  layout: 'game',
 
   data: () => ({
+    isModalVisible: false,
     images: [
       'Almond_blossoms',
       'Bowl_with_Daisies',
@@ -77,7 +92,7 @@ export default {
 
     nailedImages(newVal) {
       if (newVal.length == this.shuffledImagesArray.length) {
-        alert('congrats you won')
+        this.isModalVisible = true
         this.restartGame()
       }
     }
@@ -107,7 +122,6 @@ export default {
           this.nailedImages.push(firstImg, secondImg)
           localStorage.setItem('nailedPicsArray', this.nailedImages)
         } else {
-          console.log('check of both cards resulted in mismatch')
           //IF CARDS DO NOT MATCH, END ATTEMPT in 5s
           this.startTimer()
         }
@@ -180,27 +194,23 @@ export default {
         .map((idx) => {
           return +idx
         }) || []
-    this.currentAttemptNum = localStorage.getItem('attemptNumber') || 1
+    console.log(localStorage.getItem('attemptNumber'))
+    this.currentAttemptNum = +localStorage.getItem('attemptNumber') || 1
+  },
+  beforeDestroy() {
+    this.restartGame()
   }
 }
 </script>
 
-<style lang="scss">
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<style scoped lang="scss">
 .game {
   height: 100%;
-  width: 95vw;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  padding: 10px;
+  width: 100%;
+
   &__grid {
     display: grid;
-    grid-gap: 18px;
+    grid-gap: 14px;
     justify-content: center;
     grid-template-columns: repeat(9, 1fr);
     @media (max-width: 1000px) {
@@ -211,7 +221,15 @@ export default {
   &__footer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     align-items: center;
+    &--left,
+    &--right {
+      width: fit-content;
+    }
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
   }
 
   &__counter,
@@ -222,9 +240,21 @@ export default {
 
   &__timer {
     margin: 0 20px;
+    width: 80px;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #000;
+    line-height: 22px;
+    svg {
+      height: 22px;
+      width: 22px;
+      fill: red;
+    }
+
+    span {
+      margin-left: 10px;
+      padding-top: 5px;
+    }
   }
   &__button {
     height: 46px;

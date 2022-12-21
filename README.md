@@ -1,4 +1,4 @@
-# riddles
+# smartass
 
 ## Build Setup
 
